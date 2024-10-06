@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const Todo('not like the others'),
   ];
 
-  Future<void> create_todo(BuildContext context) async {
+  Future<void> createTodo(BuildContext context) async {
     final result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => const CreateTodo()));
     if (result is Todo) {
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          create_todo(context);
+          createTodo(context);
         },
         tooltip: 'Add Todo',
         child: const Icon(Icons.add),
