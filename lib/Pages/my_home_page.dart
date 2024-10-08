@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:learn_flutter_app/Models/todo.dart';
 import 'package:learn_flutter_app/Pages/create_todo.dart';
+import 'package:learn_flutter_app/main.dart';
 import 'package:learn_flutter_app/widgets/todo_card.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -13,22 +15,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Todo> todos = [
-    const Todo('thing 1'),
-    const Todo('thing 2'),
-    const Todo('not like the others'),
-  ];
-
-  Future<void> createTodo(BuildContext context) async {
+  Future<void> createTodo(TodoModel model) async {
     final result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => const CreateTodo()));
     if (result is Todo) {
-      todos.add(result);
+      model.add(result);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    List<TodoCard> getTodos = context.watch<TodoModel>().todos.map((todo) {
+      return TodoCard(title: todo.title);
+    }).toList();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -37,14 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: todos.map((todo) {
-            return TodoCard(title: todo.title);
-          }).toList(),
+          children: getTodos,
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          createTodo(context);
+          createTodo(context.read<TodoModel>());
         },
         tooltip: 'Add Todo',
         child: const Icon(Icons.add),

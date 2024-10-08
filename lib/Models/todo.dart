@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Todo {
@@ -11,9 +12,11 @@ class TodoModel extends ChangeNotifier {
 
   void add(Todo todo) {
     todos.add(todo);
+    notifyListeners();
   }
 
   void remove(Todo todo) {
     todos.remove(todo);
+    notifyListeners();
   }
 }

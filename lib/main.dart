@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => TodoModel())],
-        child: const MyApp()),
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => TodoModel()),
+    ], child: const MyApp()),
   );
 }
 
